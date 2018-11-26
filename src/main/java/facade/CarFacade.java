@@ -46,11 +46,11 @@ public class CarFacade {
         listJ.add(future1);
 
         for (Future<String> fut : listT) {
-            Data.add("T" + fut.get());
+            Data.add(fut.get());
         }
 
         for (Future<String> fut : listJ) {
-            Data.add("J" + fut.get());
+            Data.add(fut.get());
         }
 
         return Data;
