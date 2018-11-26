@@ -63,10 +63,11 @@ public class PeopleFacade {
         ExecutorService es = Executors.newFixedThreadPool(4);
         List<Future<String>> list = new ArrayList<>();
         for (int i = 0; i <= 5; i++) {
-            Callable<String> callable = new FiveFacade(i);
+            Callable<String> callable = new ThreadFacade(i);
             Future<String> future = es.submit(callable);
             list.add(future);
         }
+        System.out.println(list);
         for (Future<String> fut : list) {
             try {
                 //print the return value of Future, notice the output delay in console
@@ -76,6 +77,8 @@ public class PeopleFacade {
                 e.printStackTrace();
             }
         }
+        
+        System.out.println(Data);
         
         return Data;
     }

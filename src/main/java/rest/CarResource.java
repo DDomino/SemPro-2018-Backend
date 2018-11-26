@@ -6,7 +6,11 @@
 package rest;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import facade.CarFacade;
+import java.io.IOException;
+import java.net.ProtocolException;
+import java.util.concurrent.ExecutionException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Consumes;
@@ -23,29 +27,49 @@ import javax.ws.rs.core.MediaType;
  */
 @Path("car")
 public class CarResource {
+      
+    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    CarFacade CF = new CarFacade();
 
     @Context
     private UriInfo context;
-    Gson gson = new Gson();
-    CarFacade CF = new CarFacade();
 
     /**
      * Creates a new instance of CarResource
      */
     public CarResource() {
+    
     }
 
+    
+    @GET
+     @Produces(MediaType.APPLICATION_JSON)
+    public String hej(){
+    return "hej";
+    }
+    
     /**
      * Retrieves representation of an instance of rest.CarResource
      *
      * @return an instance of java.lang.String
      */
     @GET
+    @Path("/cars")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getCars() {
-        return gson.toJson(CF.getAllCars());
-
+    public String getCarsSrax() throws ProtocolException, IOException, InterruptedException, ExecutionException {
+        
+        String jsonStr = CF.ScrapeCars().toString();
+        
+        return jsonStr;
     }
+
+//    @GET
+//    @Path("/jonas")
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public String getCarsJonas() throws ProtocolException, IOException {
+//        return CF.getAllCarsJonas();
+//
+//    }
 
     /**
      * PUT method for updating or creating an instance of CarResource
